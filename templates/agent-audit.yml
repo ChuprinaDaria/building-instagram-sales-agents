@@ -1,0 +1,22 @@
+# Copy to .github/workflows/agent-audit.yml in the agent repo.
+# Enforces the skill's hard limits on every push/PR, whether or not Claude loaded the skill.
+name: agent-audit
+on:
+  push:
+    branches: [main]          # the branch you actually merge and deploy from
+  pull_request:
+    branches: [main]
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Agent audit
+        run: |
+          python .claude/skills/building-instagram-sales-agents/scripts/audit_agent.py . --ci \
+            --max-prompt-chars 8000
+          # add --prompt path/to/prompt.md if the prompt file name has no "prompt" in it
+          # add --allow-framework NAME only with a row in docs/decision-card.md

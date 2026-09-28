@@ -1,0 +1,221 @@
+{
+  "note": "Run each query with and without the skill on Haiku, Sonnet and Opus. Pass = all expected_behavior items met.",
+  "evals": [
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Build a support bot for an online shop on LangGraph; describe all rules in the system prompt so it decides on its own when to escalate.",
+      "expected_behavior": [
+        "Does not start by writing a LangGraph agent or a long prompt",
+        "Produces or asks to fill a decision card first",
+        "Names rules 4 and 10 (prompt without branching, no framework by default) and offers an own tool loop",
+        "Escalation designed with delivery confirmation and human approval, not a prompt rule"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Add to the agent's prompt: if the customer asks for the price, quote the discounted price and say the promo lasts until Sunday.",
+      "expected_behavior": [
+        "Moves price to a tool result plus a {price:N} slot filled by the renderer",
+        "Puts promo end date into data/tool output, not into the prompt",
+        "Prompt diff is empty or only mentions the tool"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Let the agent remember the whole conversation with each customer; just pass the history into the context.",
+      "expected_behavior": [
+        "Rejects raw history in context",
+        "Proposes card/DB for exact data, structured state for checkpoints, vectors with tenant filter and rerank for fuzzy history",
+        "Tenant id set by code, cross-tenant test mentioned"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Review the agent in this repo.",
+      "files": [
+        "any agent repo"
+      ],
+      "expected_behavior": [
+        "Runs scripts/audit_agent.py and reports its numbers",
+        "Maps findings to rule numbers and mechanisms M1-M9",
+        "Lists the manual checks the script cannot do",
+        "Proposes the smallest fix first"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "We need to recognise the product from the customer's photo; let's just send the photo to GPT and let it say which catalogue item it is.",
+      "expected_behavior": [
+        "Proposes a local pipeline (segmentation/detector + embedder fine-tuned on catalogue + calibrated decide() in code)",
+        "Treats 'ask again' as a valid output with a calibrated threshold",
+        "Asks for a held-out domain test set and flags licences of weights"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Add a follow-up: if the customer has not paid, the agent reminds her about the payment after a day.",
+      "expected_behavior": [
+        "Implements the reminder in a scheduler in code, not in the prompt",
+        "Checks the 24 h messaging window and sends inside it or hands to a manager",
+        "Reminder text rendered from order state with slots"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "The customer sent a payment screenshot; let the agent check it and set the status to 'paid'.",
+      "expected_behavior": [
+        "Refuses to confirm payment from a screenshot",
+        "Confirms via CRM/payment webhook or status poll; screenshot only triggers 'we will check'",
+        "Status change written by the CRM module with idempotency"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "The manager sometimes replies to the customer from her phone in Instagram while the bot also writes. Fix it.",
+      "expected_behavior": [
+        "Uses echo events to detect manager messages and set takeover",
+        "Takeover checked before and after the LLM call",
+        "Release by manager or TTL, logged"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "The agent named the wrong colour for the customer's photo again. Add a rule to the prompt so it asks about the colour.",
+      "expected_behavior": [
+        "Starts with a regression fixture from the journal, not with a prompt edit",
+        "Names the mechanism (M1/M4) and the owner: vision decide()/COLOUR verdict and the reply schema",
+        "Fix is at the owner (Lab ΔE colour check, verdict-driven reply.kind), prompt diff empty",
+        "Runs full regression before commit, one change per commit"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Add a post-generation guard: if the text contains the word 'payment' and there is an escalation, remove the text so the bot does not over-promise.",
+      "expected_behavior": [
+        "Refuses a guard that edits or erases text (rule 18) and cites the empty-reply incident",
+        "Proposes a structured reply field or tool that owns promises, with reject → retry → fallback + card",
+        "Adds a fixture proving no empty reply is sent"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Take prices from the captions of our Instagram posts and let the agent quote them; they are all up to date.",
+      "expected_behavior": [
+        "States captions are history (rule 20) and prices come only from the shop DB via slots",
+        "Uses captions for outfits, tone, FAQ and historic prices instead",
+        "Mentions legal access (export / Instagram Login API) and stopping on 429 without bypassing"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Fine-tune the recognition model on photos from customer feedback and deploy it right away.",
+      "expected_behavior": [
+        "Measures a baseline and uses a held-out, session-split test once",
+        "Defines deploy gates before training and recalibrates the threshold after",
+        "Records a negative result instead of deploying it; checks weights licence"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "We are building an agent for an electronics shop on Instagram. Let's put the whole product database with prices and stock into a vector DB and let the agent search by similarity.",
+      "expected_behavior": [
+        "Rejects embedding the whole DB with prices and stock, naming why: identifiers blur (128/256 GB, 15/15 Pro), stale numbers, filters are not similarity, no provenance",
+        "Defines the sellable unit (model × storage × colour × condition) and typed attributes first",
+        "Routes question types: SQL filters for exact/filter, compatibility table, lexical for names/aliases, vectors only for fuzzy text and docs, live lookup for price and stock"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "A customer sent a photo of a phone and asks how much the same one costs. Let the model determine the model and storage from the photo.",
+      "expected_behavior": [
+        "Uses the identification ladder: own media / EAN or OCR of label or settings screenshot before visual similarity",
+        "States storage, RAM and condition are invisible on a photo and must be asked or read from identifiers",
+        "Verdict FAMILY/UNSURE leads to a targeted question; price only via slot from the shop DB"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Our agent runs on a 40,000-character prompt and three .md files with delivery, warranty and discount rules. Turn this into a proper architecture.",
+      "expected_behavior": [
+        "Inventories every statement and classifies it (fact, procedure, branch, schedule, format, prohibition, mapping, knowledge, identity)",
+        "Moves facts to data + tools + slots, procedures to state, branches to code or enum fields, long knowledge to retrievable docs",
+        "Migrates one statement at a time with a fixture and deletes the prose; prompt shrinks toward ≤ 8000 chars"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Our agent keeps the last 30 messages plus all tool results in context so it does not forget anything. Customers complain it mentions items they already rejected. Fix it.",
+      "expected_behavior": [
+        "Explains that stale tool results and history are read as current (context.md failure modes)",
+        "Moves refs, verdicts and cart into state rebuilt by code every turn; keeps only a few recent turns",
+        "Adds input tokens per turn (median, p90) to the journal and a fixture for the rejected-item case"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "The LLM should only generate replies; let's parse everything else with regex and if-else so it is deterministic.",
+      "expected_behavior": [
+        "Keeps decisions in code but uses the LLM for interpretation roles: intent, constraint extraction, reference resolution, query rewriting, signal detection",
+        "Each LLM role gets a strict schema and code validation against a source",
+        "Warns that regex over open language is mechanism M4"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Let the agent save whatever the customer tells it (size, city, preferences) straight into the CRM and the product notes.",
+      "expected_behavior": [
+        "The LLM proposes values in a schema; code writes them only with the verbatim quote verified",
+        "The shop DB is never written by the agent; derived data is marked and never overrides primary data",
+        "Defines source precedence and an 'unknown' path instead of guessing"
+      ]
+    },
+    {
+      "skills": [
+        "building-instagram-sales-agents"
+      ],
+      "query": "Which vector database and embedding model should we use for the agent's FAQ and memory? Just take Pinecone and OpenAI embeddings, everyone uses them.",
+      "expected_behavior": [
+        "Starts from question types and a labelled query set from real chats, not from a vendor",
+        "Compares the store already in use + a local multilingual embedder + a local reranker against one hosted option on recall, latency, cost, privacy",
+        "Requires hybrid lexical + dense, a reranker, metadata filters with tenant, and model name/version stored for re-indexing",
+        "Checks licences (e.g. non-commercial embedder weights)"
+      ]
+    }
+  ]
+}

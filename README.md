@@ -210,7 +210,7 @@ Issues and pull requests are welcome. A new rule needs a check and an eval query
 
 ## Author
 
-**Daria Chuprina**, AI engineer: AI agents, MCP tools, RAG pipelines.
+**Daria Chuprina**, AI engineer, CV Embedded. **MILFTECH**
 
 - GitHub: [@ChuprinaDaria](https://github.com/ChuprinaDaria)
 - Website: [lazysoft.pl](https://lazysoft.pl)

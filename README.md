@@ -219,10 +219,10 @@ Issues and pull requests are welcome. A new rule needs a check and an eval query
 
 ## License
 
-[Chuprina Attribution License 1.0](LICENSE), the author's own licence.
+**[The Chuprina Glory License 1.0](LICENSE): do whatever you want, just make the author famous.**
 
-You may do anything with the skill: use it, copy it, modify it, translate it, sell it, build products on it, commercial or not. The one condition: credit the author. Keep the licence file with every copy, and in any work based on this one name the author where readers see it (README, docs, credits page):
+Use it, fork it, change it, translate it, sell it, build a product on it. Commercial or not, free. The price is glory: keep the licence file with every copy, and in anything built on this skill name the author where people actually look (README, docs, credits page):
 
 > Based on "Building Instagram sales agents" by Daria Chuprina (https://github.com/ChuprinaDaria/building-instagram-sales-agents).
 
-Do not present the work as your own. No warranty.
+Do not pretend you wrote it. No warranty: if your agent sells the wrong size, take it up with your decision card.

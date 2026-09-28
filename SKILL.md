@@ -1,7 +1,7 @@
 ---
 name: building-instagram-sales-agents
 description: Designs, reviews, fixes and grows LLM sales and support agents in Instagram DM (also Viber, WhatsApp) for shops of any product domain - catalogue database, customer photos, memory, human managers in the loop, orders, payments, CRM. Enforces one architecture - code produces facts, decisions and state, the LLM only interprets the customer and writes words - so the repo grows without patch-on-patch regressions. Covers data preparation and retrieval routing, moving prompt rules and knowledge files into code, photo recognition with local models (dataset collection, Hugging Face, RunPod, YOLO, SAM, DINO, detection vs classification vs retrieval), LLM roles beyond chat, small per-turn context, a traceable source of truth, slots and renderer, evals and merge gates. Use when building or changing such an agent, fixing a bug or regression in it, adding a rule to its prompt, choosing a framework, a vector store, an embedder or reranker, or a vision model for it, or reviewing its repo.
-license: Chuprina Attribution License 1.0 - free to use and modify with credit to the author (see LICENSE)
+license: The Chuprina Glory License 1.0 - do anything, credit the author visibly (see LICENSE)
 ---
 
 # Building Instagram sales agents
